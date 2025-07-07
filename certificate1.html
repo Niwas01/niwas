@@ -106,6 +106,7 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
         }
+        html, body { scroll-behavior: smooth; }
     </style>
 </head>
 <body class="text-google-text leading-relaxed">
@@ -284,6 +285,37 @@
             });
             animateOnScroll();
         });
+    </script>
+
+    <!-- Scroll to Top and Bottom Buttons -->
+    <button id="scrollToTopBtn" aria-label="Scroll to top" class="fixed bottom-8 right-8 z-[1001] hidden bg-accent text-white border-none rounded-full w-11 h-11 shadow-md cursor-pointer transition-all duration-200 hover:bg-accent-dark hover:-translate-y-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="block mx-auto"><path d="M18 15l-6-6-6 6"/></svg></button>
+    <button id="scrollToBottomBtn" aria-label="Scroll to bottom" class="fixed bottom-8 right-24 z-[1001] hidden bg-accent text-white border-none rounded-full w-11 h-11 shadow-md cursor-pointer transition-all duration-200 hover:bg-accent-dark hover:-translate-y-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="block mx-auto"><path d="M6 9l6 6 6-6"/></svg></button>
+    <script>
+    // Scroll to Top Button
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => {
+        scrollToTopBtn.classList.toggle('hidden', window.scrollY < 200);
+    });
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    // Scroll to Bottom Button
+    const scrollToBottomBtn = document.getElementById('scrollToBottomBtn');
+    window.addEventListener('scroll', () => {
+        scrollToBottomBtn.classList.toggle('hidden', (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200);
+    });
+    scrollToBottomBtn.addEventListener('click', () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+    // Keyboard shortcuts for fast scrolling
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'ArrowDown') {
+            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+        }
+        if (e.ctrlKey && e.key === 'ArrowUp') {
+            window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+        }
+    });
     </script>
 </body>
 </html>
